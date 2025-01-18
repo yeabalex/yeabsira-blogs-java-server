@@ -24,9 +24,9 @@ public class ArticleController {
 
     @GetMapping("/api/v1/articles")
     @ResponseBody
-    public ResponseEntity<ArticleModel> getArticleById(@RequestParam("id") String id) {
+    public ResponseEntity<ArticleModel> getArticleById(@RequestParam("id") String id, @RequestParam("userid") String userID) {
         try {
-            ArticleModel article = articleService.getArticle(id);
+            ArticleModel article = articleService.getArticle(id, userID);
             return ResponseEntity.ok().body(article);
         } catch (Exception e) {
             e.printStackTrace();
@@ -36,9 +36,9 @@ public class ArticleController {
 
     @PostMapping("/api/v1/like")
     @ResponseBody
-    public ResponseEntity<?> likeArticle(@RequestParam("id") String id, @RequestParam("action") String action) {
+    public ResponseEntity<?> likeArticle(@RequestParam("id") String id, @RequestParam("action") String action, @RequestParam("userid") String userid) {
         try {
-            articleService.likeArticle(id, action);
+            articleService.likeArticle(id, action, userid);
             return ResponseEntity.ok().build();
         }catch (Exception e) {
             e.printStackTrace();
@@ -48,7 +48,10 @@ public class ArticleController {
 
     @GetMapping("/api/v1/trending")
     @ResponseBody
-    public ResponseEntity<List<ArticleModel>> getTrendingArticle() {
-        return ResponseEntity.ok().body(articleService.getLatest7Articles());
+    public ResponseEntity<List<ArticleModel>> getTrendingArticle(@RequestParam("userid") String userid) {
+        if(userid.isEmpty()){
+            return ResponseEntity.ok().body(articleService.getLatest7Articles(""));
+        }
+        return ResponseEntity.ok().body(articleService.getLatest7Articles(userid));
     }
 }

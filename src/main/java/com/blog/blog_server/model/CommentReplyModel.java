@@ -34,6 +34,10 @@ public class CommentReplyModel {
 
     @Getter
     @Setter
+    private String username;
+
+    @Getter
+    @Setter
     private OffsetDateTime createdAt;
 
     @Getter

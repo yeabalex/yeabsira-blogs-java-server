@@ -13,6 +13,6 @@ import java.util.Optional;
 @Repository
 public interface ArticleRepo extends MongoRepository<ArticleModel, String> {
     Optional<ArticleModel> findById(String id);
-    @Query(value = "{}", fields = "{id: 1, thumbnail: 1, title: 1, description: 1, likes: 1, views: 1, comments: 1, username: 1, createdAt: 1, topics: 1}")
+    @Query(value = "{}", fields = "{id: 1, thumbnail: 1, title: 1, description: 1, likes: 1, views: 1, comments: 1, username: 1, createdAt: 1, topics: 1, liked: 1}")
     List<ArticleModel> findAllByOrderByCreatedAtDesc(Pageable pageable);
 }

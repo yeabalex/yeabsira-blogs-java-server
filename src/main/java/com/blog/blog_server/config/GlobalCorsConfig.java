@@ -17,12 +17,16 @@ public class GlobalCorsConfig {
         
         // Add multiple specific origins
         config.setAllowedOrigins(Arrays.asList(
-            "http://localhost:3001","http://localhost:3000"
+            "http://localhost:3001", "http://localhost:3000"
         ));
         
-        config.addAllowedHeader("*");  
-        config.addAllowedMethod("*"); 
-        config.setAllowCredentials(true);  
+        // Specify the headers explicitly
+        config.setAllowedHeaders(Arrays.asList(
+            "Authorization", "Content-Type", "Accept", "X-Requested-With", "Origin"
+        ));
+        
+        config.addAllowedMethod("*");  // Allow all HTTP methods
+        config.setAllowCredentials(true);  // Allow credentials like cookies
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
@@ -30,4 +34,3 @@ public class GlobalCorsConfig {
         return new CorsFilter(source);
     }
 }
-

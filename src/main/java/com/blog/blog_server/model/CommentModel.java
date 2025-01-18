@@ -12,6 +12,7 @@ import java.time.OffsetDateTime;
 @Document("comments")
 public class CommentModel {
     @Id
+    @Getter
     private String id;
     @Setter
     @Getter
@@ -25,6 +26,9 @@ public class CommentModel {
     @Setter
     @Getter
     private String articleID;
+    @Setter
+    @Getter
+    private String username;
 
     @CreatedDate
     @Getter

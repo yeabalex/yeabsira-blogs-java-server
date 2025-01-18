@@ -32,7 +32,6 @@ public class AuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String token = request.getHeader("Authorization");
-        System.out.println(token);
         if (token == null || !token.startsWith("Bearer ")) {
             response.sendError(javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED,
                     "Missing or invalid Authorization header");

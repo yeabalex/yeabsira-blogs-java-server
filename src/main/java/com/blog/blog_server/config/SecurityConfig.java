@@ -22,7 +22,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf->csrf.disable())
+        http.csrf(csrf->csrf.disable()).cors(cors->cors.configure(http))
                 .authorizeHttpRequests(auth->auth.requestMatchers("/api/v1/**").permitAll().anyRequest().authenticated())
                 .addFilterBefore(authFilter, BasicAuthenticationFilter.class); // Add custom filter
 

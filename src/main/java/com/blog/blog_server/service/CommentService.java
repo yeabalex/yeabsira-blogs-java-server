@@ -4,6 +4,9 @@ import com.blog.blog_server.model.ArticleModel;
 import com.blog.blog_server.model.CommentModel;
 import com.blog.blog_server.repository.ArticleRepo;
 import com.blog.blog_server.repository.CommentsRepo;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -29,5 +32,9 @@ public class CommentService {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+    }
+
+    public Page<CommentModel> getComments(String articleId, int page, int size) {
+        return commentsRepo.findByArticleIDOrderByCreatedAtDesc(articleId, PageRequest.of(page, size));
     }
 }
