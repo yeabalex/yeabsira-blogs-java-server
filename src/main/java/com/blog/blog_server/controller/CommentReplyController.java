@@ -8,6 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 public class CommentReplyController {
@@ -16,15 +20,24 @@ public class CommentReplyController {
         this.commentsReplyService = commentsReplyService;
     }
 
-    @PostMapping("/api/v1/add/reply")
+    @PostMapping("/api/v1/reply")
     @ResponseBody
-    public ResponseEntity<?> postReply(@RequestBody CommentReplyModel commentReplyModel) {
+    public ResponseEntity<?> addReply(@RequestBody CommentReplyModel reply) {
         try {
-            commentsReplyService.postReply(commentReplyModel);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }catch (Exception e) {
+            commentsReplyService.postReply(reply);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
+    @GetMapping("/api/v1/reply/{commentID}")
+    @ResponseBody
+    public ResponseEntity<?> getReplies(@PathVariable String commentID,
+    @RequestParam(defaultValue = "0") int page,
+    @RequestParam(defaultValue = "5") int size) {
+        return ResponseEntity.ok().body(commentsReplyService.getReplies(commentID, page, size));
+    }
+    
 }

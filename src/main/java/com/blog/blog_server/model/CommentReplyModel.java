@@ -4,16 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.OffsetDateTime;
 
 @Document("replies")
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class CommentReplyModel {
     @Id
+    @Getter
     private String id;
 
     @Setter
@@ -36,10 +40,12 @@ public class CommentReplyModel {
     @Setter
     private String username;
 
+    @CreatedDate
     @Getter
     @Setter
     private OffsetDateTime createdAt;
 
+    @LastModifiedDate
     @Getter
     @Setter
     private OffsetDateTime updatedAt;
